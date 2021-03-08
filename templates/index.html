@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Datavisualisation</h1>
+    <div class="container my_container">
+        <div>
+            <iframe src="{{ url_for('map') }}" style="width: 100%; height: 500px;"></iframe>
+        </div>
+        <div style="display: flex;">
+            <div class="block_left">
+                <div class="block_left_card">
+                    <span>Nombre d'aéroports</span>
+                    <span><strong>{{ nbAeroports[0]['nbAeroports'] }}</strong></span>
+                </div>
+                <div class="block_left_card">
+                    <span>Nombre de compagnies</span>
+                    <span><strong>{{ nbCompagnies[0]["nbCompagnies"] }}</strong></span>
+                </div>
+                <div class="block_left_card">
+                    <span>Nombre de destinations</span>
+                    <span><strong>{{ nbDestinations[0]["nbDestinations"] }}</strong></span>
+                </div>
+                <div class="block_left_card">
+                    <span>Nombre d'avions</span>
+                    <span><strong>{{ nbAvions[0]["nbAvions"] }}</strong></span>
+                </div>
+                <div class="block_left_card">
+                    <span>Nombre de Fuseaux Horaires</span>
+                    <span><strong>{{ nbFuseauxHoraires[0]["nbFuseauxHoraires"] }}</strong></span>
+                </div>
+                <div class="block_left_card">
+                    <span>Nombre de zone</span>
+                    <span><strong>{{ nbZone[0]["nbZone"] }}</strong></span>
+                </div>
+                <div class="block_left_card">
+                    <span>Aéroport avec le plus de départ</span>
+                    <span><strong>{{ topAeroportDepart[0]["name"] }}</strong></span>
+                    <span>
+                        <strong>{{ topAeroportDepart[0]["nb"] }}</strong>
+                    </span>
+                </div>
+            </div>
+            <div class="block_right">
+                <div class="block_right_card margin-right">
+                    <canvas id="nbDestinationsByCompagnie" width="400" height="400"></canvas>
+                </div>
+                <div class="block_right_card margin-left">
+                    <canvas id="flightsByMonth" width="400" height="400"></canvas>
+                </div>
+                <div class="block_right_card margin-right margin-top">
+                    <canvas id="topDestination" width="400" height="400"></canvas>
+                </div>
+                <div class="block_right_card margin-left margin-top">
+                    <canvas id="lowDestination" width="400" height="400"></canvas>
+                </div>
+                <div class="block_right_card_width margin-top margin-bottom">
+                    <canvas id="arrDepDelay" width="750" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    let nbDestinationsByComp = {{ nbDestinationsByComp|safe }};
+    let topDestination = {{ topDestination|safe }};
+    let lowDestination = {{ lowDestination|safe }};
+    let flightsByMonth = {{ flightsByMonth|safe }};
+    let airlinesDepDelay = {{ airlinesDepDelay|safe }};
+    let airlinesArrDelay = {{ airlinesArrDelay|safe }};
+
+    chartNbDestinationsByCompagnie(nbDestinationsByComp)
+    chartTopDestination(topDestination)
+    chartLowDestination(lowDestination)
+    chartFlightByMonth(flightsByMonth)
+    chartArrDepDelay(airlinesDepDelay, airlinesArrDelay)
+</script>
+{% endblock %}
